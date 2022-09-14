@@ -1,0 +1,312 @@
+version: '3.4'
+
+services:
+  naming-server:
+    image: lu1zf3rnand0/naming-server:0.0.1-SNAPSHOT
+    ports:
+      - 8761:8761
+    networks:
+      - ms-networks
+  
+  conteiner-service:
+    image: lu1zf3rnand0:conteiner-service
+    restart: always
+    build:
+      context: .
+      dockerfile: conteiner-service/Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      - naming-server
+      - conteiner-db
+      - rabbit-mq
+    environment:
+      TZ: America/Sao_Paulo
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.DATASOURCE.URL: jdbc:mysql://conteiner-db:3307/conteiner_db?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.DATASOURCE.USERNAME: root
+      SPRING.DATASOURCE.PASSWORD: root
+      SPRING.FLYWAY.URL: jdbc:mysql://conteiner-db:3307/conteiner_db?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.FLYWAY.USER: root
+      SPRING.FLYWAY.PASSWORD: root
+      SPRING.FLYWAY.SCHEMAS: conteiner_db
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
+      SPRING_RABBITMQ_HOST: rabbit-mq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+    networks:
+      - ms-networks
+
+  conteiner-db:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 3307:3307
+    expose:
+      - 3307
+    environment:
+      TZ: America/Sao_Paulo
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: conteiner_db
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_TCP_PORT: 3307
+    networks:
+      - ms-networks
+      
+  veiculo-service:
+    image: lu1zf3rnand0:veiculo-service
+    restart: always
+    build:
+      context: .
+      dockerfile: veiculo-service/Dockerfile
+    ports:
+      - 8100:8100
+    depends_on:
+      - naming-server
+      - veiculo-db
+      - rabbit-mq
+    environment:
+      TZ: America/Sao_Paulo
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.DATASOURCE.URL: jdbc:mysql://veiculo-db:3308/veiculo_db?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.DATASOURCE.USERNAME: root
+      SPRING.DATASOURCE.PASSWORD: root
+      SPRING.FLYWAY.URL: jdbc:mysql://veiculo-db:3308/veiculo_db?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.FLYWAY.USER: root
+      SPRING.FLYWAY.PASSWORD: root
+      SPRING.FLYWAY.SCHEMAS: veiculo_db
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
+      SPRING_RABBITMQ_HOST: rabbit-mq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+    networks:
+      - ms-networks        
+
+  veiculo-db:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 3308:3308
+    expose:
+      - 3308
+    environment:
+      TZ: America/Sao_Paulo
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: veiculo_db
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_TCP_PORT: 3308
+    networks:
+      - ms-networks
+
+  cargasolta-service:
+    image: lu1zf3rnand0:cargasolta-service
+    restart: always
+    build:
+      context: .
+      dockerfile: cargasolta-service/Dockerfile
+    ports:
+      - 8200:8200
+    depends_on:
+      - naming-server
+      - cargasolta-db
+      - rabbit-mq
+    environment:
+      TZ: America/Sao_Paulo
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.DATASOURCE.URL: jdbc:mysql://cargasolta-db:3309/cargasolta_db?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.DATASOURCE.USERNAME: root
+      SPRING.DATASOURCE.PASSWORD: root
+      SPRING.FLYWAY.URL: jdbc:mysql://cargasolta-db:3309/cargasolta_db?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.FLYWAY.USER: root
+      SPRING.FLYWAY.PASSWORD: root
+      SPRING.FLYWAY.SCHEMAS: cargasolta_db
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
+      SPRING_RABBITMQ_HOST: rabbit-mq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+    networks:
+      - ms-networks
+
+  cargasolta-db:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 3309:3309
+    expose:
+      - 3309
+    environment:
+      TZ: America/Sao_Paulo
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: cargasolta_db
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_TCP_PORT: 3309
+    networks:
+      - ms-networks
+
+  transportadora-service:
+    image: lu1zf3rnand0:transportadora-service
+    restart: always
+    build:
+      context: .
+      dockerfile: transportadora-service/Dockerfile
+    ports:
+      - 8300:8300
+    depends_on:
+      - naming-server
+      - transportadora-db
+      - rabbit-mq
+    environment:
+      TZ: America/Sao_Paulo
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.DATASOURCE.URL: jdbc:mysql://transportadora-db:3310/transportadora_db?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.DATASOURCE.USERNAME: root
+      SPRING.DATASOURCE.PASSWORD: root
+      SPRING.FLYWAY.URL: jdbc:mysql://transportadora-db:3310/transportadora_db?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.FLYWAY.USER: root
+      SPRING.FLYWAY.PASSWORD: root
+      SPRING.FLYWAY.SCHEMAS: transportadora_db
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
+      SPRING_RABBITMQ_HOST: rabbit-mq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+    networks:
+      - ms-networks
+
+  transportadora-db:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 3310:3310
+    expose:
+      - 3310
+    environment:
+      TZ: America/Sao_Paulo
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: transportadora_db
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_TCP_PORT: 3310
+    networks:
+      - ms-networks
+
+  agendamento-service:
+    image: lu1zf3rnand0:agendamento-service
+    restart: always
+    build:
+      context: .
+      dockerfile: agendamento-service/Dockerfile
+    ports:
+      - 8400:8400
+    depends_on:
+      - naming-server
+      - agendamento-db
+      - rabbit-mq
+    environment:
+      TZ: America/Sao_Paulo
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.DATASOURCE.URL: jdbc:mysql://agendamento-db:3311/agendamento_db?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.DATASOURCE.USERNAME: root
+      SPRING.DATASOURCE.PASSWORD: root
+      SPRING.FLYWAY.URL: jdbc:mysql://agendamento-db:3311/agendamento_db?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.FLYWAY.USER: root
+      SPRING.FLYWAY.PASSWORD: root
+      SPRING.FLYWAY.SCHEMAS: agendamento_db
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
+      SPRING_RABBITMQ_HOST: rabbit-mq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+    networks:
+      - ms-networks
+
+  agendamento-db:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 3311:3311
+    expose:
+      - 3311
+    environment:
+      TZ: America/Sao_Paulo
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: agendamento_db
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_TCP_PORT: 3311
+    networks:
+      - ms-networks
+
+  api-gateway:
+    image: lu1zf3rnand0/api-gateway:0.0.1-SNAPSHOT
+    restart: always
+    ports:
+      - 8125:8125
+    depends_on:
+      - naming-server
+      - rabbit-mq
+    environment:
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
+      SPRING_RABBITMQ_HOST: rabbit-mq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+    networks:
+      - ms-networks
+  
+  zipkin-server:
+    image: openzipkin/zipkin:2.23.2
+    restart: always
+    ports:
+      - 9411:9411
+    depends_on:
+      - rabbit-mq
+    environment:
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
+    networks:
+      - ms-networks
+
+  rabbit-mq:
+    image: rabbitmq:3.8.14-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - ms-networks   
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - ms-networks
+    ports:
+      - 9090:9090
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    networks:
+      - ms-networks
+
+volumes:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  ms-networks:
+    driver: bridge
+

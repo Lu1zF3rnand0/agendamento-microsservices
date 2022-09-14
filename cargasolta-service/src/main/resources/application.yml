@@ -1,0 +1,52 @@
+server:
+  port: 8200
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  application:
+    name: cargasolta-service
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/cargasolta_db?useTimezone=true&serverTimezone=UTC
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL57Dialect
+
+  flyway:
+    url: jdbc:mysql://localhost:3307
+    schemas: cargasolta_db
+    user: root
+    password: root
+
+  sleuth:
+    sampler:
+      probability: 1.0
+
+springdoc:
+  api-docs:
+    path: cargasolta-service/v3/api-docs
+
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: 'health,prometheus'
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    prometheus:
+      enabled: true
