@@ -62,30 +62,12 @@ jobs:
       - name: Push to Docker Hub Container Registry
         run:  |
           docker tag ${{ secrets.DOCKER_USERNAME }}/naming-server:0.0.1-SNAPSHOT ${{ secrets.DOCKER_USERNAME }}/naming-server:${{ github.run_id }}
-          docker tag ${{ secrets.DOCKER_USERNAME }}/naming-server:0.0.1-SNAPSHOT ${{ secrets.DOCKER_USERNAME }}/naming-server:latest
-          
           docker tag ${{ secrets.DOCKER_USERNAME }}/api-gateway:0.0.1-SNAPSHOT ${{ secrets.DOCKER_USERNAME }}/api-gateway:${{ github.run_id }}
-          docker tag ${{ secrets.DOCKER_USERNAME }}/api-gateway:0.0.1-SNAPSHOT ${{ secrets.DOCKER_USERNAME }}/api-gateway:latest
-          
-          docker tag ${{ secrets.DOCKER_USERNAME }}/veiculo-service:latest ${{ secrets.DOCKER_USERNAME }}/veiculo-service:${{ github.run_id }}
-          docker tag ${{ secrets.DOCKER_USERNAME }}/cargasolta-service:latest ${{ secrets.DOCKER_USERNAME }}/cargasolta-service:${{ github.run_id }}
-          docker tag ${{ secrets.DOCKER_USERNAME }}/transportadora-service:latest ${{ secrets.DOCKER_USERNAME }}/transportadora-service:${{ github.run_id }}
-          docker tag ${{ secrets.DOCKER_USERNAME }}/agendamento-service:latest ${{ secrets.DOCKER_USERNAME }}/agendamento-service:${{ github.run_id }}
-          
+          docker tag ${{ secrets.DOCKER_USERNAME }}/conteiner-service:latest ${{ secrets.DOCKER_USERNAME }}/conteiner-service:${{ github.run_id }}
           docker push ${{ secrets.DOCKER_USERNAME }}/naming-server:${{ github.run_id }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/naming-server:latest
-          
           docker push ${{ secrets.DOCKER_USERNAME }}/api-gateway:${{ github.run_id }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/api-gateway:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/conteiner-service:${{ github.run_id }}
           
-          docker push ${{ secrets.DOCKER_USERNAME }}/veiculo-service:${{ github.run_id }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/veiculo-service:latest
+      
           
-          docker push ${{ secrets.DOCKER_USERNAME }}/cargasolta-service:${{ github.run_id }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/cargasolta-service:latest
-          
-          docker push ${{ secrets.DOCKER_USERNAME }}/transportadora-service:${{ github.run_id }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/transportadora-service:latest
-          
-          docker push ${{ secrets.DOCKER_USERNAME }}/agendamento-service:${{ github.run_id }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/agendamento-service:latest
+        
