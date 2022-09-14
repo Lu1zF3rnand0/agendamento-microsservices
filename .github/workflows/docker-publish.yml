@@ -67,7 +67,6 @@ jobs:
           docker tag ${{ secrets.DOCKER_USERNAME }}/api-gateway:0.0.1-SNAPSHOT ${{ secrets.DOCKER_USERNAME }}/api-gateway:${{ github.run_id }}
           docker tag ${{ secrets.DOCKER_USERNAME }}/api-gateway:0.0.1-SNAPSHOT ${{ secrets.DOCKER_USERNAME }}/api-gateway:latest
           
-          docker tag ${{ secrets.DOCKER_USERNAME }}/conteiner-service:latest ${{ secrets.DOCKER_USERNAME }}/conteiner-service:${{ github.run_id }}
           docker tag ${{ secrets.DOCKER_USERNAME }}/veiculo-service:latest ${{ secrets.DOCKER_USERNAME }}/veiculo-service:${{ github.run_id }}
           docker tag ${{ secrets.DOCKER_USERNAME }}/cargasolta-service:latest ${{ secrets.DOCKER_USERNAME }}/cargasolta-service:${{ github.run_id }}
           docker tag ${{ secrets.DOCKER_USERNAME }}/transportadora-service:latest ${{ secrets.DOCKER_USERNAME }}/transportadora-service:${{ github.run_id }}
