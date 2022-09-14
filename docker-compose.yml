@@ -9,7 +9,7 @@ services:
       - ms-networks
   
   conteiner-service:
-    image: lu1zf3rnand0:conteiner-service
+    image: lu1zf3rnand0/conteiner-service
     restart: always
     build:
       context: .
@@ -57,7 +57,7 @@ services:
       - ms-networks
       
   veiculo-service:
-    image: lu1zf3rnand0:veiculo-service
+    image: lu1zf3rnand0/veiculo-service
     restart: always
     build:
       context: .
@@ -105,7 +105,7 @@ services:
       - ms-networks
 
   cargasolta-service:
-    image: lu1zf3rnand0:cargasolta-service
+    image: lu1zf3rnand0/cargasolta-service
     restart: always
     build:
       context: .
@@ -153,7 +153,7 @@ services:
       - ms-networks
 
   transportadora-service:
-    image: lu1zf3rnand0:transportadora-service
+    image: lu1zf3rnand0/transportadora-service
     restart: always
     build:
       context: .
@@ -201,7 +201,7 @@ services:
       - ms-networks
 
   agendamento-service:
-    image: lu1zf3rnand0:agendamento-service
+    image: lu1zf3rnand0/agendamento-service
     restart: always
     build:
       context: .
