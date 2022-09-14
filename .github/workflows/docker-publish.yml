@@ -79,9 +79,6 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/api-gateway:${{ github.run_id }}
           docker push ${{ secrets.DOCKER_USERNAME }}/api-gateway:latest
           
-          docker push ${{ secrets.DOCKER_USERNAME }}/conteiner-service:${{ github.run_id }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/conteiner-service:latest
-          
           docker push ${{ secrets.DOCKER_USERNAME }}/veiculo-service:${{ github.run_id }}
           docker push ${{ secrets.DOCKER_USERNAME }}/veiculo-service:latest
           
