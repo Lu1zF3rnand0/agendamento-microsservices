@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 @Data
@@ -23,6 +24,8 @@ public class Agendamento {
 
     private String codigo;
 
+    private String numero;
+
     @OneToMany
     private List<Carga> cargas = new ArrayList<>();
 
@@ -36,6 +39,8 @@ public class Agendamento {
     @PrePersist
     private void gerarCodigo() {
         setCodigo(UUID.randomUUID().toString());
+        setNumero(String.valueOf(new Random().nextInt(9999)));
     }
+
 
 }

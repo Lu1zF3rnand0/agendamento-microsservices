@@ -7,8 +7,6 @@ import br.com.luiz.agendamentoservice.domain.service.AgendamentoService;
 import br.com.luiz.agendamentoservice.domain.service.CargaService;
 import br.com.luiz.agendamentoservice.domain.service.TransportadoraService;
 import br.com.luiz.agendamentoservice.dto.AgendamentoDto;
-import br.com.luiz.agendamentoservice.dto.CargaDto;
-import br.com.luiz.agendamentoservice.dto.TransportadoraDto;
 import br.com.luiz.agendamentoservice.proxy.TransportadoraProxy;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -36,10 +35,11 @@ public class AgendamentoController {
 
     private Environment environment;
 
+    private RestTemplate restTemplate;
+
     @GetMapping("/taok")
     public String getTest() {
         return transportadoraProxy.getTest() + " Agendamento port: " + environment.getProperty("local.server.port");
-//        return "Ta funfando em " + environment.getProperty("local.server.port");
     }
 
 
@@ -67,30 +67,24 @@ public class AgendamentoController {
         agendamentoDto.setCargas(cargas);
 
         Agendamento agendamento = agendamentoService.mapAgendamentoDtoToModel(agendamentoDto);
+
+        String uri = "http://localhost:8086/mail/create";
+        restTemplate.postForEntity(uri, agendamentoDto, String.class);
+
         return agendamentoService.mapAgendamentoModelToDto(agendamentoService.save(agendamento));
     }
 
-    @Operation(summary = "Cria carga")
-    @PostMapping("/cargas")
-    @ResponseStatus(HttpStatus.CREATED)
-    public CargaDto create(@RequestBody CargaDto cargaDto) {
-        Carga carga = cargaService.mapCargaDtoToModel(cargaDto);
-        return cargaService.mapCargaModelToDto(cargaService.save(carga));
-    }
-
-    @Operation(summary = "Cria transportadora")
-    @PostMapping("/transportadoras")
-    @ResponseStatus(HttpStatus.CREATED)
-    public TransportadoraDto create(@RequestBody TransportadoraDto transportadoraDto) {
-        Transportadora transportadora = transportadoraService.mapTransportadoraDtoToModel(transportadoraDto);
-        return transportadoraService.mapTransportadoraModelToDto(transportadoraService.save(transportadora));
-    }
-
-    @Operation(summary = "Exclui um agendamento por codigo")
-    @DeleteMapping("/{codigo}")
+    @Operation(summary = "Cancela um agendamento por codigo")
+    @DeleteMapping("/cancela/{codigo}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable String codigo) {
-        agendamentoService.deleteByCodigo(codigo);
+    public void cancelAgendamento(@PathVariable String codigo) {
+        Agendamento agendamento = agendamentoService.buscarOuFalhar(codigo);
+        agendamentoService.cancelaAgendamento(agendamento);
+        var agendamentoDto = agendamentoService.mapAgendamentoModelToDto(agendamento);
+
+        String uri = "http://localhost:8086/mail/cancel";
+        restTemplate.postForEntity(uri, agendamentoDto, String.class);
+
     }
 
 }

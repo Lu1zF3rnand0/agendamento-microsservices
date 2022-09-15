@@ -17,6 +17,7 @@ import java.util.List;
 public class AgendamentoDto {
 
     private String codigo;
+    private String numero;
     private List<Carga> cargas = new ArrayList<>();
     private List<Transportadora> transportadoras = new ArrayList<>();
     private String descricao;

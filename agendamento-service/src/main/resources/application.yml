@@ -18,7 +18,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/agendamento_db?useTimezone=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3311/agendamento_db?useTimezone=true&serverTimezone=UTC
     username: root
     password: root
 
@@ -31,7 +31,7 @@ spring:
         dialect: org.hibernate.dialect.MySQL57Dialect
 
   flyway:
-    url: jdbc:mysql://localhost:3307
+    url: jdbc:mysql://localhost:3311
     schemas: agendamento_db
     user: root
     password: root

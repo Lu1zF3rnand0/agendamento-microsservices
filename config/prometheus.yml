@@ -17,18 +17,18 @@ scrape_configs:
   - job_name: "api-veiculo-job"
     metrics_path: "/actuator/prometheus"
     static_configs:
-      - targets: [ "host.docker.internal:8100" ]
+      - targets: [ "veiculo-service:8100" ]
         labels:
           application: "api-veiculo"
   - job_name: "api-cargasolta-job"
     metrics_path: "/actuator/prometheus"
     static_configs:
-      - targets: [ "host.docker.internal:8200" ]
+      - targets: [ "cargasolta-service:8200" ]
         labels:
           application: "api-cargasolta"
   - job_name: "api-transportadora-job"
     metrics_path: "/actuator/prometheus"
     static_configs:
-      - targets: [ "host.docker.internal:8300" ]
+      - targets: [ "transportadora-service:8300" ]
         labels:
           application: "api-transportadora"

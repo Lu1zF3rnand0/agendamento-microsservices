@@ -35,12 +35,7 @@ public class TransportadoraService {
         return transportadoraRepository.save(transportadora);
     }
 
-    //
-//    public void deleteByCodigo(String codigo) {
-//        Transportadora transportadora = buscarOuFalhar(codigo);
-//        transportadoraRepository.deleteById(transportadora.getId());
-//    }
-//
+
     public TransportadoraDto mapTransportadoraModelToDto(Transportadora transportadora) {
 
         TransportadoraDto transportadoraDto = new TransportadoraDto();

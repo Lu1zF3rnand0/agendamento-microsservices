@@ -43,6 +43,7 @@ public class AgendamentoService {
         AgendamentoDto agendamentoDto = new AgendamentoDto();
 
         agendamentoDto.setCodigo(agendamento.getCodigo());
+        agendamentoDto.setNumero(agendamento.getNumero());
         agendamentoDto.setDescricao(agendamento.getDescricao());
         agendamentoDto.setStatus(agendamento.getStatus());
         agendamentoDto.setCargas(agendamento.getCargas());
@@ -70,6 +71,12 @@ public class AgendamentoService {
 
     public void copyToDomainObject(AgendamentoDto agendamentoDto, Agendamento agendamento) {
         modelMapper.map(agendamentoDto, agendamento);
+    }
+
+    public void cancelaAgendamento(Agendamento agendamento) {
+        agendamento.setStatus("Cancelado");
+        agendamentoRepository.save(agendamento);
+
     }
 
 }

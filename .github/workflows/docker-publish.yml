@@ -55,6 +55,10 @@ jobs:
         working-directory: ./agendamento-service
         run: mvn clean package -DskipTests
 
+      - name: Building Send Mail Microsservice Jar
+        working-directory: ./sendmail-service
+        run: mvn clean package -DskipTests
+
       - name: Docker Compose Build
         working-directory: .
         run: docker-compose build
@@ -72,6 +76,7 @@ jobs:
           docker tag ${{ secrets.DOCKER_USERNAME }}/cargasolta-service:latest ${{ secrets.DOCKER_USERNAME }}/cargasolta-service:${{ github.run_id }}
           docker tag ${{ secrets.DOCKER_USERNAME }}/transportadora-service:latest ${{ secrets.DOCKER_USERNAME }}/transportadora-service:${{ github.run_id }}
           docker tag ${{ secrets.DOCKER_USERNAME }}/agendamento-service:latest ${{ secrets.DOCKER_USERNAME }}/agendamento-service:${{ github.run_id }}
+          docker tag ${{ secrets.DOCKER_USERNAME }}/sendmail-service:latest ${{ secrets.DOCKER_USERNAME }}/sendmail-service:${{ github.run_id }}
           
           docker push ${{ secrets.DOCKER_USERNAME }}/naming-server:${{ github.run_id }}
           docker push ${{ secrets.DOCKER_USERNAME }}/naming-server:latest
@@ -93,3 +98,6 @@ jobs:
           
           docker push ${{ secrets.DOCKER_USERNAME }}/agendamento-service:${{ github.run_id }}
           docker push ${{ secrets.DOCKER_USERNAME }}/agendamento-service:latest
+
+          docker push ${{ secrets.DOCKER_USERNAME }}/sendmail-service:${{ github.run_id }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/sendmail-service:latest
