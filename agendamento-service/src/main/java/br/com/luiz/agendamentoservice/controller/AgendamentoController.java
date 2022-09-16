@@ -10,32 +10,42 @@ import br.com.luiz.agendamentoservice.dto.AgendamentoDto;
 import br.com.luiz.agendamentoservice.proxy.TransportadoraProxy;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Random;
 
 @Tag(name = "Agendamento endpoint")
 @RestController
 @RequestMapping("agendamento-service")
-@AllArgsConstructor
 public class AgendamentoController {
 
 
+    @Autowired
     private AgendamentoService agendamentoService;
 
+    @Autowired
     private CargaService cargaService;
 
+    @Autowired
     private TransportadoraService transportadoraService;
 
+    @Autowired
     private TransportadoraProxy transportadoraProxy;
 
+    @Autowired
     private Environment environment;
 
+    @Autowired
     private RestTemplate restTemplate;
+
+    @Value("${mail}")
+    private String uri;
 
     @GetMapping("/taok")
     public String getTest() {
@@ -65,11 +75,13 @@ public class AgendamentoController {
 
         agendamentoDto.setTransportadoras(transportadoras);
         agendamentoDto.setCargas(cargas);
+        agendamentoDto.setNumero(String.valueOf(new Random().nextInt(9999)));
 
         Agendamento agendamento = agendamentoService.mapAgendamentoDtoToModel(agendamentoDto);
 
-        String uri = "http://localhost:8086/mail/create";
-        restTemplate.postForEntity(uri, agendamentoDto, String.class);
+
+        String url = uri + "/create";
+        restTemplate.postForEntity(url, agendamentoDto, String.class);
 
         return agendamentoService.mapAgendamentoModelToDto(agendamentoService.save(agendamento));
     }
@@ -82,8 +94,8 @@ public class AgendamentoController {
         agendamentoService.cancelaAgendamento(agendamento);
         var agendamentoDto = agendamentoService.mapAgendamentoModelToDto(agendamento);
 
-        String uri = "http://localhost:8086/mail/cancel";
-        restTemplate.postForEntity(uri, agendamentoDto, String.class);
+        String url = uri + "/cancel";
+        restTemplate.postForEntity(url, agendamentoDto, String.class);
 
     }
 

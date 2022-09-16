@@ -2,11 +2,10 @@ package br.com.luiz.agendamentoservice.domain.service;
 
 import br.com.luiz.agendamentoservice.domain.exception.AgendamentoNaoEncontradoException;
 import br.com.luiz.agendamentoservice.domain.model.Agendamento;
-import br.com.luiz.agendamentoservice.domain.model.Carga;
 import br.com.luiz.agendamentoservice.domain.repository.AgendamentoRepository;
 import br.com.luiz.agendamentoservice.dto.AgendamentoDto;
-import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,11 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class AgendamentoService {
 
+    @Autowired
     private AgendamentoRepository agendamentoRepository;
 
+    @Autowired
     private ModelMapper modelMapper;
 
     public List<AgendamentoDto> findAllAgendamentos() {
@@ -57,6 +57,7 @@ public class AgendamentoService {
 
         Agendamento agendamento = new Agendamento();
 
+        agendamento.setNumero(agendamentoDto.getNumero());
         agendamento.setDescricao(agendamentoDto.getDescricao());
         agendamento.setCargas(agendamentoDto.getCargas());
         agendamento.setTransportadoras(agendamentoDto.getTransportadoras());

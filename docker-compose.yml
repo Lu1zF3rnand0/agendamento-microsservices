@@ -248,17 +248,6 @@ services:
     networks:
       - ms-networks
 
-  sendmail-service:
-    image: lu1zf3rnand0/sendmail-service
-    restart: always
-    build:
-      context: .
-      dockerfile: sendmail-service/Dockerfile
-    ports:
-      - 8086:8086
-    networks:
-      - ms-networks
-
   api-gateway:
     image: lu1zf3rnand0/api-gateway:0.0.1-SNAPSHOT
     restart: always

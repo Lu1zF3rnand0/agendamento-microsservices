@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-inverse" th:fragment="navbar">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Home</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a th:href="@{/agendamentos}">Agendamento</a></li>
+            <li><a th:href="@{/conteineres}">Conteiner</a></li>
+            <li><a th:href="@{/veiculos}">Veiculo</a></li>
+            <li><a th:href="@{/cargassoltas}">Carga Solta</a></li>
+            <li><a th:href="@{/transportadoras}">Transportadora</a></li>
+        </ul>
+
+    </div>
+</nav>
+
+</body>
+</html>
