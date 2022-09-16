@@ -55,8 +55,8 @@ jobs:
         working-directory: ./agendamento-service
         run: mvn clean package -DskipTests
 
-      - name: Building Send Mail Microsservice Jar
-        working-directory: ./sendmail-service
+      - name: Building Agendamento Fron Microsservice Jar
+        working-directory: ./agendamentofront-service
         run: mvn clean package -DskipTests
 
       - name: Docker Compose Build
