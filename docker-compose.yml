@@ -248,6 +248,17 @@ services:
     networks:
       - ms-networks
 
+  agendamentofront-service:
+    image: lu1zf3rnand0/agendamentofront-service
+    restart: always
+    build:
+      context: .
+      dockerfile: agendamentofront-service/Dockerfile
+    ports:
+      - 80:80
+    networks:
+      - ms-networks
+
   api-gateway:
     image: lu1zf3rnand0/api-gateway:0.0.1-SNAPSHOT
     restart: always
