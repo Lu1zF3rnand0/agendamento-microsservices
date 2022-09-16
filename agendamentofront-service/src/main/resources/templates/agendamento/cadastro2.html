@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>App Agendamento</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div th:insert="menu :: navbar"></div>
+
+<div class="container mt-3">
+    <h2>Cadastramento de Agendamento</h2>
+
+
+    <form th:action="@{/agendamento/incluir}" th:object="${agendamento}" method="post">
+
+        <div class="mb-3 mt-3">
+            <label>Descricao:
+                <input type="text" class="form-control" name="modelo" th:field="*{descricao}"/>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="dropOperator">Transportadoras: </label><select class="form-control" id="dropOperator">
+            <option value="0">Escolha a transportadora</option>
+            <option th:each="transp : ${transportadoras}" th:value="${transp.codigo}"
+                    th:text="${transp.nome}"></option>
+        </select>
+        </div>
+
+        <div class="form-group">
+            <label>Imo: </label>
+            <label class="radio-inline">
+                <input type="radio" name="edTech" value="1" th:field="*{imo}" th:value="${true}"/>Sim
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="edTech" value="0" th:field="*{imo}" th:value="${false}"/>Não
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="dropOperator2">Cargas: </label><select class="form-control" id="dropOperator2">
+            <option value="0">Escolha a carga</option>
+            <option th:each="carga : ${cargas}" th:value="${carga.codigo}"
+                    th:text="${carga.descricao}"></option>
+        </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+
+</div>
+
+</body>
+</html>

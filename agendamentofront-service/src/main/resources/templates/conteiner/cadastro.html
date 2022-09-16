@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>App Conteiner</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div th:insert="menu :: navbar"></div>
+
+<div class="container mt-3">
+    <h2>Cadastramento de Conteiner</h2>
+
+
+    <form th:action="@{/conteiner/incluir}" th:object="${conteiner}" method="post">
+
+        <div class="mb-3 mt-3">
+            <label>Numero:
+                <input type="text" class="form-control" name="numero" th:field="*{numero}"/>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>Tamanho: </label>
+            <label class="radio-inline">
+                <input type="radio" name="tamanho" value="20" th:field="*{tamanho}" th:value="${20}"/>20
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="tamanho" value="40" th:field="*{tamanho}" th:value="${40}"/>40
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>Status: </label>
+            <label class="radio-inline">
+                <input type="radio" name="status" value="Cheio" th:field="*{status}" th:value="Cheio"/>Cheio
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="status" value="Vazio" th:field="*{status}" th:value="Vazio"/>Vazio
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>App Agendamento</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div th:insert="menu :: navbar"></div>
+<div class="container mt-3">
+
+    <h2 align="center">Lista de Agendamentos</h2>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Numero</th>
+            <th>Descricao</th>
+            <th>Status</th>
+            <th>Transportadoras</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="a : ${lista}">
+            <td th:text="${a.numero}"/>
+            <td th:text="${a.descricao}"/>
+            <td th:text="${a.status}" />
+            <td th:if="${a.status == 'Agendado'}"><a class="btn" th:href="@{/agendamento/excluir/{codigo}(codigo=${a.codigo})}">Cancelar</a></td>
+            <td th:if="${a.status == 'Cancelado'}"><a class="btn" th:disabled="true">Cancelar</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" th:disabled="true">Novo</a>
+
+</div>
+</body>
+</html>

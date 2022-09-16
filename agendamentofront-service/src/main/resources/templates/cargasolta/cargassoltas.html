@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>App Agendamento</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div th:insert="menu :: navbar"></div>
+<div class="container mt-3">
+
+    <h2 align="center">Lista de Cargas Soltas</h2>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Descricao</th>
+            <th>Imo</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="cs : ${lista}">
+            <td th:text="${cs.nome}"/>
+            <td th:text="${cs.descricao}"/>
+            <td th:if="${cs.imo}">Sim</td>
+            <!--    edTech = false        -->
+            <td th:if="${not cs.imo}">Nao</td>
+            <td><a th:href="@{/cargasolta/excluir/{codigo}(codigo=${cs.codigo})}">Excluir</a> </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/cargasolta}" class="btn btn-primary">Novo</a>
+
+</div>
+</body>
+</html>

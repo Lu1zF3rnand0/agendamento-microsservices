@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>App Agendamento</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div th:insert="menu :: navbar"></div>
+
+<div class="container mt-3">
+    <h2>Cadastramento de Veiculo</h2>
+
+
+    <form th:action="@{/veiculo/incluir}" th:object="${veiculo}" method="post">
+
+        <div class="mb-3 mt-3">
+            <label>Chassi:
+                <input type="text" class="form-control" name="chassi" th:field="*{chassi}"/>
+            </label>
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label>Modelo:
+                <input type="text" class="form-control" name="modelo" th:field="*{modelo}"/>
+            </label>
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label>Montadora:
+                <input type="text" class="form-control" name="montadora" th:field="*{montadora}"/>
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+
+</div>
+
+</body>
+</html>

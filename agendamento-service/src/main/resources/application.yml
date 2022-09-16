@@ -56,3 +56,5 @@ management:
       show-details: always
     prometheus:
       enabled: true
+
+mail: ${URL:http://localhost:8086/mail}

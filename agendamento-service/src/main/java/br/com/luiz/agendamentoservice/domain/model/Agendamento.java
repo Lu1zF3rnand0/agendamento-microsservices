@@ -39,7 +39,6 @@ public class Agendamento {
     @PrePersist
     private void gerarCodigo() {
         setCodigo(UUID.randomUUID().toString());
-        setNumero(String.valueOf(new Random().nextInt(9999)));
     }
 
 
